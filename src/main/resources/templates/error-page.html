@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Erreur</title>
+    <style>
+        .error-container {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #f2dede;
+            border: 1px solid #ebccd1;
+            color: #a94442;
+            border-radius: 5px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="error-container">
+    <h1>Erreur</h1>
+    <p th:text="${errorMessage}">Une erreur est survenue</p>
+    <a href="/add-contact" class="btn">Réessayer</a>
+    <a href="/all-contacts" class="btn">Retour à la liste des contacts</a>
+</div>
+</body>
+</html>

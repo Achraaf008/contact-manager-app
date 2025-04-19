@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Contacts</title>
+    <style>
+        .header {
+            background-color: #333;
+            padding: 15px;
+            margin: -20px -20px 20px -20px;
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+        }
+        .nav-links a:hover {
+            background-color: #555;
+            border-radius: 3px;
+        }
+        .search-form {
+            display: flex;
+            gap: 10px;
+        }
+        .search-form input {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+        }
+        .search-form button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .actions a {
+            margin-right: 10px;
+        }
+        .add-contact {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .add-contact:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <div class="nav">
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/add-contact">Add Contact</a>
+            <a href="/all-contacts">All Contacts</a>
+        </div>
+        <form class="search-form" action="/search" method="get">
+            <input type="text" name="firstName" placeholder="Search by first name...">
+        </form>
+    </div>
+</div>
+<h2>Contacts List</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Gender</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="contact : ${contacts}">
+        <td th:text="${contact.firstName}"></td>
+        <td th:text="${contact.lastName}"></td>
+        <td th:text="${contact.email}"></td>
+        <td th:text="${contact.phoneNumber}"></td>
+        <td th:text="${contact.address}"></td>
+        <td th:text="${contact.gender}"></td>
+        <td>
+            <a th:href="@{/update/{id}(id=${contact.id})}">Update</a>
+            <a th:href="@{/delete/{id}(id=${contact.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/add-contact">Add New Contact</a>
+</body>
+</html>
