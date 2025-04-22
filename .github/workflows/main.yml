@@ -30,14 +30,24 @@ jobs:
           mvn clean
           mvn -B package --file pom.xml
 
-      # Use GitHub's built-in run_id as a unique tag
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v4
+      - name: Build Docker image
+        uses: docker/build-push-action@v2
         with:
           context: .
           file: Dockerfile
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ secrets.DOCKER_HUB_USER_NAME }}/contact-manager-app:${{ github.run_id }}
-          # Add this for Docker Hub authentication
+          push: false
+          tags: ${{ secrets.DOCKER_HUB_USER_NAME }}/contact-manager-app:latest
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
           username: ${{ secrets.DOCKER_HUB_USER_NAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USER_NAME }}/contact-manager-app:latest
